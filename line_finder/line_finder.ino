@@ -1,19 +1,29 @@
 int Led = 13; //定义LED 接口
-int buttonpin = 8;//定义寻线传感器接口
-int line1,line2;//定义数字变量val
+int detector2 = 8;//定义寻线传感器接口
+int detector3 = 9;
+int line2,line3;//定义数字变量val
 void setup()
 { 
   pinMode(Led, OUTPUT); //定义LED 为输出接口  
-  pinMode(buttonpin, INPUT); //定义寻线传感器为输出接口
+  pinMode(detector2, INPUT);
+  pinMode(detector3, INPUT);//定义寻线传感器为输出接口
   Serial.begin(9600);
   }
   void loop(){ 
-    line1 = digitalRead(buttonpin); //将数字接口3的值读取赋给val  
-    line2 = digitalRead(10);//将数字接口3的值读取赋给line2
+    line2 = digitalRead(detector2); //将数字接口3的值读取赋给val  
+    line3 = digitalRead(detector3);//将数字接口3的值读取赋给line2
  
-    if (line1 == HIGH) //当寻线传感器检测有信号时，LED 闪烁 
+    if (line2 == LOW) //当检测到白色，则会变成low 
     {    digitalWrite(Led, HIGH);  
-    Serial.println(1);}  
-    else  {    digitalWrite(Led, LOW); 
-    Serial.println(0); }
+    Serial.println(2);}  
+    else  {    digitalWrite(Led, LOW);  }
+
+    if (line3 == LOW) //当检测到白色，则会变成low
+    {    digitalWrite(Led, HIGH);  
+    Serial.println(3);}  
+    else  {    digitalWrite(Led, LOW);  }
     }
+    
+
+    
+    
