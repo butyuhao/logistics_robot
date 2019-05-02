@@ -4,10 +4,10 @@
 #define M0     4
 #define DIR0   26
 
-#define M1     3
+#define M1     2
 #define DIR1   24
 
-#define M2     2
+#define M2     3
 #define DIR2   22
 
 //#define M3     10
@@ -22,5 +22,5 @@ T/C2: Pin11(OC2A)��Pin3(OC2B)
 */
 
 void TaskRun(void);
-void change_location(int X,int Y);
+void change_location(int X,int Y, bool Left, bool Right);
 #endif

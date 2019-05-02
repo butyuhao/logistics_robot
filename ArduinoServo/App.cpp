@@ -17,7 +17,7 @@ bool L_Running = FALSE;
  ActThreeVell vell_t;
 
 
-void change_location(int X,int Y) {
+void change_location(int X,int Y,bool Left, bool Right) {
 
   float x,y,z;
   x = X;
@@ -129,7 +129,7 @@ else{
 		  analogWrite(M2, 255+(int)vell.v3);
 	   }
    }
-if (L_Running)    // ˳ʱ��ת
+if (Left==TRUE)    // ˳ʱ��ת
 {
    
    #if 1
@@ -142,7 +142,7 @@ if (L_Running)    // ˳ʱ��ת
 	#endif  	  
  }
 
-else if(R_Running) {     // ��ʱ��ת
+else if(Right==TRUE) {     // ��ʱ��ת
 	digitalWrite(DIR0, 1);
     analogWrite(M0, 95);
     digitalWrite(DIR1, 1);
