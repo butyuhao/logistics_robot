@@ -731,6 +731,7 @@ starttime = millis();
 
 void loop() {
 //开始读取二维码
+/*
   forward_on_line(1);
   turn_right_start();
   forward_on_line(6);
@@ -752,7 +753,7 @@ void loop() {
   backward_on_line(3);
   forward_on_line(1);
   turn_right_l2fl();
-
+*/
 /*
 while((millis()-starttime)<=830){
   forward_on_fine_line(1);
