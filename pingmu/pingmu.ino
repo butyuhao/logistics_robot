@@ -23,13 +23,14 @@ display.clearDisplay();
 display.setTextSize(2);//字体大小
 display.setTextColor(WHITE);//文字颜色
 display.setCursor(0,0);//设置游标位置
-display.println("4  3  8");
-display.println("8  4  3");
-display.setTextColor(BLACK, WHITE); // 'inverted' text白底黑字
 
-display.display();
-delay(2000);
-display.clearDisplay();
 }
 void loop() {
+display.println("T1:438");
+display.println("T2:843");
+// 'inverted' text白底黑字
+
+display.display();
+//delay(2000);
+//display.clearDisplay();
 }

@@ -1,5 +1,11 @@
 //#include "algorithm.h"
+#include <Adafruit_SSD1306.h>
+#include <splash.h>
 
+#define OLED_RESET 4
+Adafruit_SSD1306 display(OLED_RESET);
+#if (SSD1306_LCDHEIGHT != 64)
+#endif
 
 #define M1     2
 #define DIR1   24
@@ -147,7 +153,7 @@ void turn_left(int pwm){
   } 
   
   void turn_left_l2fl(){
-      forward(83);
+  forward(83);
   delay(1300);
   turn_left(83);
   delay(1000);
@@ -221,7 +227,7 @@ while(grid_count<1){
   stop();
     }
   void turn_right_start(){//启动时用的那个右转
-      forward(83);
+  forward(83);
   delay(1000);
   turn_right(83);
   delay(1000);
@@ -253,8 +259,8 @@ while(grid_count<1){
 stop();
     }
 
-      void turn_left_fl2l(){
-      forward(83);
+  void turn_left_fl2l(){
+  forward(83);
   delay(1300);
   turn_left(83);
   delay(1000);
@@ -632,52 +638,26 @@ void backward_on_line(int step_num){
     }
   }
   }
-void get_color(int num){
+void get_color(String num){
   int digit;
+  
+  int number=0;
+
+    
+    number += atoi(num[0])*10 + atoi(num[1])*10+ atoi(num[2])*10;
+    
+    Serial.print("number:");
+    Serial.print(number);
+
   for(int i=1;i<=3;i++){
-  digit = num%10;
-  num = num/10;
-  if(digit==1){
-    color[i] = 'r';
+  digit = number%10;
+  number = number/10;
+  color[i] = digit;
     }
-  if(digit==2){
-    color[i] = 'g';
-    }
-  if(digit==3){
-    color[i] = 'b';
-    }
-    }
-  
-  
-  }  
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);//computer
-  Serial2.begin(9600);//openmv
-  Serial3.begin(9600);//qrcode
-  
-  pinMode(DIR1,OUTPUT); 
-   pinMode(DIR2,OUTPUT); 
-   pinMode(DIR3,OUTPUT); 
-
-
-  starttime = millis();
-}
-void run_task(){
-  forward_on_line(1);
-  turn_right_start();
-  forward_on_line(6);
-  backward_on_line(3);
-  forward_on_line(1);
-  turn_right_l2fl();
-  }
-
-void loop() {
-//开始读取二维码
-
-
-
- while(is_qrcode==0){
+}  
+String read_openmv(){
+  is_qrcode=0;
+  while(is_qrcode==0){
       if (Serial2.available() > 0)//判读是否串口有数据
   {
     String comdata = "";//缓存清零
@@ -690,9 +670,88 @@ void loop() {
     {
       Serial2.println(comdata);//打印comdata数据
       Serial.println(comdata);
-      is_qrcode=0;//读取完毕
+      
+      is_qrcode=1;//读取完毕
+      return comdata;
     }
-  }}
+  }
+}}
+String read_qrcode(){
+  is_qrcode=0;
+  while(is_qrcode==0){
+      if (Serial3.available() > 0)//判读是否串口有数据
+  {
+    String comdata = "";//缓存清零
+    while (Serial3.available() > 0)//循环串口是否有数据
+    {
+      comdata += char(Serial3.read());//叠加数据到comdata
+      delay(2);//延时等待响应
+    }
+    if (comdata.length() > 0)//如果comdata有数据
+    {
+      Serial3.println(comdata);//打印comdata数据
+      Serial.println(comdata);
+      
+      is_qrcode=1;//读取完毕
+      return comdata;
+    }
+  }
+}
+}
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);//computer
+  Serial2.begin(9600);//openmv
+  Serial3.begin(9600);//qrcode
+  
+  pinMode(DIR1,OUTPUT); 
+   pinMode(DIR2,OUTPUT); 
+   pinMode(DIR3,OUTPUT); 
+display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x64)
+// init done
+display.display();
+delay(2000);
+
+display.clearDisplay();
+// draw a single pixel画一个像素点
+display.drawPixel(10, 10, WHITE);
+display.display();
+delay(2000);
+display.clearDisplay();
+
+// 文字显示测试
+display.setTextSize(2);//字体大小
+display.setTextColor(WHITE);//文字颜色
+display.setCursor(0,0);//设置游标位置
+display.setTextColor(BLACK, WHITE); 
+
+starttime = millis();
+}
+
+
+void loop() {
+//开始读取二维码
+  forward_on_line(1);
+  turn_right_start();
+  forward_on_line(6);
+//读取二维码
+  String result = read_qrcode();
+//显示读取的顺序
+  display.println("T1:"+result);
+  display.display();
+//qr_number以int形式存储读取到的任务号
+  int qr_number = 0;
+  for(int i=0;i<3;i++){
+  color[i] = int(result[i])-int('0');
+  }
+  for(int i=0;i<3;i++){
+  qr_number = qr_number*10+int(color[i]);
+  Serial.print(int(color[i]));
+  }
+//读取到二维码后返回物料台
+  backward_on_line(3);
+  forward_on_line(1);
+  turn_right_l2fl();
 
 /*
 while((millis()-starttime)<=830){
