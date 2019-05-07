@@ -47,7 +47,7 @@ int grid_count4=0;
 int pre_state_flag4=0;
 int state_change_flag4= 0;
 
-int read_finish = 0;//是否已经扫描qrcode完毕
+int is_qrcode = 0;//是否已经扫描qrcode完毕
 
 unsigned long starttime = 0;
 
@@ -652,63 +652,48 @@ void get_color(int num){
   }  
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(9600);//computer
+  Serial2.begin(9600);//openmv
+  Serial3.begin(9600);//qrcode
+  
   pinMode(DIR1,OUTPUT); 
    pinMode(DIR2,OUTPUT); 
    pinMode(DIR3,OUTPUT); 
-   pinMode(0,OUTPUT); 
-  pinMode(1 ,OUTPUT); 
+
+
   starttime = millis();
 }
-
+void run_task(){
+  forward_on_line(1);
+  turn_right_start();
+  forward_on_line(6);
+  backward_on_line(3);
+  forward_on_line(1);
+  turn_right_l2fl();
+  }
 
 void loop() {
 //开始读取二维码
 
-    while(read_finish==0){
-      if (Serial.available() > 0)//判读是否串口有数据
+
+
+ while(is_qrcode==0){
+      if (Serial2.available() > 0)//判读是否串口有数据
   {
     String comdata = "";//缓存清零
-    while (Serial.available() > 0)//循环串口是否有数据
+    while (Serial2.available() > 0)//循环串口是否有数据
     {
-      comdata += char(Serial.read());//叠加数据到comdata
+      comdata += char(Serial2.read());//叠加数据到comdata
       delay(2);//延时等待响应
     }
     if (comdata.length() > 0)//如果comdata有数据
     {
-      Serial.println(comdata);//打印comdata数据
-      read_finish=1;//读取完毕
+      Serial2.println(comdata);//打印comdata数据
+      Serial.println(comdata);
+      is_qrcode=0;//读取完毕
     }
   }}
-  Serial.println("finish");
 
-/*
-forward_on_line(1);
-turn_right_start();
-forward_on_line(6);
-backward_on_line(3);
-forward_on_line(1);
-turn_right_l2fl();
-*/
-
-/*
- * 
- while(read_finish==0){
-      if (Serial.available() > 0)//判读是否串口有数据
-  {
-    String comdata = "";//缓存清零
-    while (Serial.available() > 0)//循环串口是否有数据
-    {
-      comdata += char(Serial.read());//叠加数据到comdata
-      delay(2);//延时等待响应
-    }
-    if (comdata.length() > 0)//如果comdata有数据
-    {
-      Serial.println(comdata);//打印comdata数据
-      read_finish=1;//读取完毕
-    }
-  }}
-*/
 /*
 while((millis()-starttime)<=830){
   forward_on_fine_line(1);
