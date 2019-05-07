@@ -6,17 +6,16 @@ void setup() {
 }
  
 void loop() {
-  if (Serial.available() > 0)//判读是否串口有数据
-  {
-    String comdata = "";//缓存清零
-    while (Serial.available() > 0)//循环串口是否有数据
+ 
+    while (Serial.available() > 0)  
     {
-      comdata += char(Serial.read());//叠加数据到comdata
-      delay(2);//延时等待响应
+        comdata += char(Serial.read());
+        delay(2);
     }
-    if (comdata.length() > 0)//如果comdata有数据
+    
+   if (comdata.length() > 0)
     {
-      Serial.println(comdata);//打印comdata数据
+       Serial.println(comdata);
+       comdata = "";
     }
-  }
 }
