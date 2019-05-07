@@ -21,8 +21,6 @@ int detector2 = 32;
 int detector3 = 34;
 int detector4 = 36;
 
-char color[4];
-int is_get_object=0;
 
 //四个巡线器当前检测到的值
 int  line1; 
@@ -54,8 +52,6 @@ int pre_state_flag4=0;
 int state_change_flag4= 0;
 
 int is_qrcode = 0;//是否已经扫描qrcode完毕
-
-unsigned long starttime = 0;
 
 void forward(int pwm){
   digitalWrite(DIR1, 0);
@@ -115,7 +111,7 @@ void left_paralle(int pwm)
   digitalWrite(DIR2, 0);
   analogWrite(M2,pwm);
   digitalWrite(DIR3,1);
-  analogWrite(M3,255-pwm-183);
+  analogWrite(M3,255-pwm-100);
  }
 
 void right_paralle(int pwm)
@@ -141,7 +137,7 @@ void turn_left(int pwm){
   digitalWrite(DIR2, 1);
   analogWrite(M2,255- pwm);
   digitalWrite(DIR3, 1);
-  analogWrite(M3,255-pwm-20);
+  analogWrite(M3,255-pwm);
   }
  void stop(){
   digitalWrite(DIR1, 0);
@@ -151,11 +147,14 @@ void turn_left(int pwm){
   digitalWrite(DIR3, 0);
   analogWrite(M3,0);
   } 
-  
   void turn_left_l2fl(){
+<<<<<<< HEAD
   forward(83);
+=======
+      forward(60);
+>>>>>>> parent of 3bb276a... update
   delay(1300);
-  turn_left(83);
+  turn_left(60);
   delay(1000);
   line1 = digitalRead(detector1); 
   line2 = digitalRead(detector2);
@@ -202,17 +201,17 @@ while(grid_count<1){
 }
   if (line3 == HIGH&&line2 == LOW) //当检测到白色，则会变成low
     {    
-     back_right_minor(83);
+     back_right_minor(60);
     } 
   else if (line2 == HIGH&&line3 == LOW) //当检测到白色，则会变成low
     {    
-      back_left_minor(83);
+      back_left_minor(60);
        
       
     }
   else  //当检测到白色，则会变成low
     {    
-      backward(83);
+      backward(60);
     }
     //如果走过2个格子就停下来
   if(grid_count==1){
@@ -227,9 +226,13 @@ while(grid_count<1){
   stop();
     }
   void turn_right_start(){//启动时用的那个右转
+<<<<<<< HEAD
   forward(83);
+=======
+      forward(60);
+>>>>>>> parent of 3bb276a... update
   delay(1000);
-  turn_right(83);
+  turn_right(60);
   delay(1000);
   line1 = digitalRead(detector1); 
   line2 = digitalRead(detector2);
@@ -258,83 +261,18 @@ while(grid_count<1){
 }
 stop();
     }
+<<<<<<< HEAD
 
   void turn_left_fl2l(){
   forward(83);
   delay(1300);
   turn_left(83);
+=======
+    void turn_right_l2fl(){
+      forward(60);
+>>>>>>> parent of 3bb276a... update
   delay(1000);
-  line1 = digitalRead(detector1); 
-  line2 = digitalRead(detector2);
-  line3 = digitalRead(detector3);
-  line4 = digitalRead(detector4);
-
-  state_change_flag1 = line1;
-  state_change_flag2 = line2;
-  state_change_flag3 = line3;
-  state_change_flag4 = line4;
-  grid_count1=0;
-  grid_count2=0;
-  grid_count3=0;
-  grid_count4=0;
-  while(grid_count1!=1 || grid_count3!=1){
-  line1 = digitalRead(detector1); 
-  line2 = digitalRead(detector2);
-  line3 = digitalRead(detector3);
-  line4 = digitalRead(detector4);
-  if(line1==1){
-    grid_count1=1;
-    }
-  if(line3==1){
-    grid_count3=1;
-    } 
-}
-stop();
-grid_count=0;
-while(grid_count<1){
-  line1 = digitalRead(detector1); 
-  line2 = digitalRead(detector2);
-  line3 = digitalRead(detector3);
-  line4 = digitalRead(detector4);
-
-    state_change_flag = line1;
-  if(state_change_flag!=pre_state_flag&&line1==line3 ){
-    pre_state_flag = state_change_flag;
-   if(pre_state_flag==0){
-    grid_count++;
-   }  
-}
-  if (line3 == HIGH&&line2 == LOW) //当检测到白色，则会变成low
-    {    
-     back_right_minor(83);
-    } 
-  else if (line2 == HIGH&&line3 == LOW) //当检测到白色，则会变成low
-    {    
-      back_left_minor(83);
-       
-      
-    }
-  else  //当检测到白色，则会变成low
-    {    
-      backward(83);
-    }
-    //如果走过2个格子就停下来
-  if(grid_count==1){
-  digitalWrite(DIR1, 0);
-  analogWrite(M1, 0);
-  digitalWrite(DIR2, 0);
-  analogWrite(M2, 0);
-  digitalWrite(DIR3, 0);
-  analogWrite(M3,0);
-    }
-  }
-  stop();
-    }
-  
-void turn_right_l2fl(){
-      forward(83);
-  delay(1000);
-  turn_right(83);
+  turn_right(60);
   delay(1000);
   line1 = digitalRead(detector1); 
   line2 = digitalRead(detector2);
@@ -378,88 +316,17 @@ while(grid_count<1){
 }
   if (line3 == HIGH&&line2 == LOW) //当检测到白色，则会变成low
     {    
-     back_right_minor(83);
+     back_right_minor(60);
     } 
   else if (line2 == HIGH&&line3 == LOW) //当检测到白色，则会变成low
     {    
-      back_left_minor(83);
+      back_left_minor(60);
        
       
     }
   else  //当检测到白色，则会变成low
     {    
-      backward(83);
-    }
-    //如果走过1个格子就停下来
-  if(grid_count==1){
-  digitalWrite(DIR1, 0);
-  analogWrite(M1, 0);
-  digitalWrite(DIR2, 0);
-  analogWrite(M2, 0);
-  digitalWrite(DIR3, 0);
-  analogWrite(M3,0);
-    }
-  }
-  stop();
-    }
-void turn_right_fl2l(){
-      forward(83);
-  delay(1000);
-  turn_right(83);
-  delay(1000);
-  line1 = digitalRead(detector1); 
-  line2 = digitalRead(detector2);
-  line3 = digitalRead(detector3);
-  line4 = digitalRead(detector4);
-
-  state_change_flag1 = line1;
-  state_change_flag2 = line2;
-  state_change_flag3 = line3;
-  state_change_flag4 = line4;
-  grid_count1=0;
-  grid_count2=0;
-  grid_count3=0;
-  grid_count4=0;
-  while(grid_count2!=1 || grid_count4!=1){
-
-  line2 = digitalRead(detector2);
-  line4 = digitalRead(detector4);
-
-  if(line4==1){
-    grid_count4=1;
-    }
-  if(line2==1){
-    grid_count2=1;
-    } 
-}
-stop();
-grid_count=0;
-while(grid_count<1){
-  line1 = digitalRead(detector1); 
-  line2 = digitalRead(detector2);
-  line3 = digitalRead(detector3);
-  line4 = digitalRead(detector4);
-
-    state_change_flag = line1;
-  if(state_change_flag!=pre_state_flag&&line1==line3 ){
-    pre_state_flag = state_change_flag;
-   if(pre_state_flag==0){
-    grid_count++;
-   }  
-}
-  if (line3 == HIGH&&line2 == LOW) //当检测到白色，则会变成low
-    {    
-     back_right_minor(83);
-    } 
-  else if (line2 == HIGH&&line3 == LOW) //当检测到白色，则会变成low
-    {    
-      back_left_minor(83);
-       
-      
-    }
-  else  //当检测到白色，则会变成low
-    {    
-      backward(83);
+      backward(60);
     }
     //如果走过1个格子就停下来
   if(grid_count==1){
@@ -491,59 +358,17 @@ void forward_on_line(int step_num){
 }
   if (line4 == HIGH&&line2 == LOW) //当检测到白色，则会变成low
     {    
-     left_minor(83);
+     left_minor(60);
     } 
   else if (line2 == HIGH&&line4 == LOW) //当检测到白色，则会变成low
     {    
-      right_minor(83 );
+      right_minor(60 );
        
       
     }
   else  //当检测到白色，则会变成low
     {    
-      forward(83);
-    }
-
-    //如果走过6个格子就停下来
-  if(grid_count==step_num){
-  digitalWrite(DIR1, 0);
-  analogWrite(M1, 0);
-  digitalWrite(DIR2, 0);
-  analogWrite(M2, 0);
-  digitalWrite(DIR3, 0);
-  analogWrite(M3,0);
-    }
-  }
-  }
-  void forward_on_fine_line(int step_num){
-  step_num *=2;
-  grid_count=0;
-  while(grid_count<step_num){
-  line1 = digitalRead(detector1); 
-  line2 = digitalRead(detector2);
-  line3 = digitalRead(detector3);
-  line4 = digitalRead(detector4);
-
-    state_change_flag = line1;
-  if(state_change_flag!=pre_state_flag&&line1==line4){
-    pre_state_flag = state_change_flag;
-   if(pre_state_flag==0){
-    grid_count++;
-   }  
-}
-  if (line3 == HIGH&&line2 == LOW) //当检测到白色，则会变成low
-    {    
-     left_minor(83);
-    } 
-  else if (line2 == HIGH&&line3 == LOW) //当检测到白色，则会变成low
-    {    
-      right_minor(83 );
-       
-      
-    }
-  else  //当检测到白色，则会变成low
-    {    
-      forward(83);
+      forward(60);
     }
 
     //如果走过6个格子就停下来
@@ -593,6 +418,16 @@ delay(2000);
 }
 stop();
 }
+  
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(DIR1,OUTPUT); 
+   pinMode(DIR2,OUTPUT); 
+   pinMode(DIR3,OUTPUT); 
+   pinMode(0,OUTPUT); 
+  pinMode(1 ,OUTPUT); 
+}
 void backward_on_line(int step_num){
   grid_count=0;
   while(grid_count<step_num){
@@ -610,17 +445,17 @@ void backward_on_line(int step_num){
 }
   if (line4 == HIGH&&line2 == LOW) //当检测到白色，则会变成low
     {    
-     back_right_minor(83);
+     back_right_minor(60);
     } 
   else if (line2 == HIGH&&line4 == LOW) //当检测到白色，则会变成low
     {    
-      back_left_minor(83);
+      back_left_minor(60);
        
       
     }
   else  //当检测到白色，则会变成low
     {    
-      backward(83);
+      backward(60);
     }
     Serial.println("grid_count");
     Serial.println(grid_count);
@@ -638,6 +473,7 @@ void backward_on_line(int step_num){
     }
   }
   }
+<<<<<<< HEAD
 void get_color(String num){
   int digit;
   
@@ -648,6 +484,36 @@ void get_color(String num){
     
     Serial.print("number:");
     Serial.print(number);
+=======
+
+void loop() {
+  
+  
+ //前进到二维码前
+
+
+
+/*
+ //注释掉的部分是沿着细线巡线
+  if (line3 == HIGH&&line2 == LOW) //当检测到白色，则会变成low
+    {    
+     left_minor(60);
+    } 
+  else if (line2 == HIGH&&line3 == LOW) //当检测到白色，则会变成low
+    {    
+      right_minor(60 );
+       
+      
+    }
+  else  //当检测到白色，则会变成low
+    {    
+      forward(60);
+    }
+   
+*/
+/*
+//开始读取二维码
+>>>>>>> parent of 3bb276a... update
 
   for(int i=1;i<=3;i++){
   digit = number%10;
@@ -674,12 +540,67 @@ String read_openmv(){
       is_qrcode=1;//读取完毕
       return comdata;
     }
+<<<<<<< HEAD
   }
 }}
 String read_qrcode(){
   is_qrcode=0;
   while(is_qrcode==0){
       if (Serial3.available() > 0)//判读是否串口有数据
+=======
+  }}
+  Serial.println("finish");
+  //格子计数器置零，回到物料台
+grid_count=0;
+while(grid_count<2){
+  line1 = digitalRead(detector1); 
+  line2 = digitalRead(detector2);
+  line3 = digitalRead(detector3);
+  line4 = digitalRead(detector4);
+
+    state_change_flag = line1;
+  if(state_change_flag!=pre_state_flag&&line1==line3 li){
+    pre_state_flag = state_change_flag;
+   if(pre_state_flag==0){
+    grid_count++;
+   }  
+}
+  if (line4 == HIGH&&line2 == LOW) //当检测到白色，则会变成low
+    {    
+     back_right_minor(60);
+    } 
+  else if (line2 == HIGH&&line4 == LOW) //当检测到白色，则会变成low
+    {    
+      back_left_minor(60);
+       
+      
+    }
+  else  //当检测到白色，则会变成low
+    {    
+      backward(60);
+    }
+    //如果走过6个格子就停下来
+  if(grid_count==2){
+  digitalWrite(DIR1, 0);
+  analogWrite(M1, 0);
+  digitalWrite(DIR2, 0);
+  analogWrite(M2, 0);
+  digitalWrite(DIR3, 0);
+  analogWrite(M3,0);
+    }
+  }
+ */
+/*
+forward_on_line(1);
+turn_right_start();
+forward_on_line(6);
+backward_on_line(3);
+forward_on_line(1);
+turn_right_l2fl();
+
+ while(read_finish==0){
+      if (Serial.available() > 0)//判读是否串口有数据
+>>>>>>> parent of 3bb276a... update
   {
     String comdata = "";//缓存清零
     while (Serial3.available() > 0)//循环串口是否有数据
@@ -754,36 +675,7 @@ void loop() {
   forward_on_line(1);
   turn_right_l2fl();
 */
-/*
-while((millis()-starttime)<=830){
-  forward_on_fine_line(1);
-  Serial.println(millis()-starttime);
-  }
-*/ 
-/*   
-stop();
-//以下是一个物料台的判断
-is_get_object=0;
-//判断是不是
-//是的话赋值为1
-if(is_get_object==0){
-  left_paralle(80);
-delay(1500);
-stop();
-//判断是不是
-//是的话赋值为1
-  }
-if(is_get_object==0){
-  right_paralle(80);
-delay(3000);
-stop();
-//判断是不是
-//是的话赋值为1
-  }
- left_paralle(80);
- delay(1500);
- stop();
-*/
+
 
   //右转
   //抬起机械臂扫描
